@@ -211,3 +211,250 @@ for (let x = 0; x < str1.length; x++) {
 }
 console.log(result1.join(''));
 /** *********************************** */
+
+// 10. Write a JavaScript program which prints the elements of the following array.
+
+// Note : Use nested for loops.
+// Sample array : var a = [[1, 2, 1, 24], [8, 11, 9, 4], [7, 0, 7, 27], [7, 4, 28, 14], [3, 10, 26, 7]];
+// Sample Output :
+// "row 0"
+// " 1"
+// " 2"
+// " 1"
+// " 24"
+// "row 1"
+// ------
+// ------
+let a = [[1, 2, 1, 24], [8, 11, 9, 4], [7, 0, 7, 27], [7, 4, 28, 14], [3, 10, 26, 7]];
+for (let i in a) {
+    console.log("row " + i);
+    for (let j in a[i]) {
+        console.log(" " + a[i][j]);
+    }
+}
+/** *********************************** */
+
+// 11. Write a JavaScript program to find the sum of squares of a numeric vector.
+function sum_sq(array) {
+    let sum = 0,
+        i = array.length;
+    while (i--) {
+        sum += Math.pow(array[i], 2);
+    }
+    return sum;
+}
+console.log(sum_sq([0,1,2,3,4]));
+/** *********************************** */
+
+// 12. Write a JavaScript program to compute the sum and product of an array of integers.
+let array = [1, 2, 3, 4, 5, 6],
+    s = 0,
+    p = 1,
+    i;
+for (i = 0; i < array.length; i += 1) {
+    s += array[i];
+    p *= array[i];
+}
+console.log('Sum : '+s + ' Product : ' +p);
+/** *********************************** */
+
+// 13. Write a JavaScript program to add items in an blank array and display the items.
+let x = 0;
+let array1 = Array();
+
+function add_element_to_array() {
+    array[x] = document.getElementById("text1").value;
+    alert("Element: " + array[x] + " Added at index " + x);
+    x++;
+    document.getElementById("text1").value = "";
+}
+
+function display_array() {
+    let e = "<hr />";
+
+    for (let y = 0; y < array.length; y++) {
+        e += "Element " + y + " = " + array[y] + "<br />";
+    }
+    document.getElementById("Result").innerHTML = e;
+}
+/** *********************************** */
+
+// 14. Write a JavaScript program to remove duplicate items from an array (ignore case sensitivity).
+function removeDuplicates(num) {
+    let out = [],
+        obj = {};
+
+    for (let x = 0; x < num.length; x++) {
+        obj[num[x]] = 0;
+    }
+    for (x in obj) {
+        out.push(x);
+    }
+    return out;
+}
+let Mynum = [1, 2, 2, 4, 5, 4, 7, 8, 7, 3, 6];
+let result2 = removeDuplicates(Mynum);
+console.log(Mynum);
+console.log(result2);
+/** *********************************** */
+
+// 15. We have the following arrays :
+// color = ["Blue ", "Green", "Red", "Orange", "Violet", "Indigo", "Yellow "];
+// o = ["th","st","nd","rd"]
+// Write a JavaScript program to display the colors in the following way :
+// "1st choice is Blue ."
+// "2nd choice is Green."
+// "3rd choice is Red."
+// - - - - - - - - - - - - -
+// Note : Use ordinal numbers to tell their position.
+let color = ["Blue ", "Green", "Red", "Orange", "Violet", "Indigo", "Yellow"];
+function Ordinal(n) {
+    let o = ["th","st","nd","rd"],
+        x = n % 100;
+    return x + (o[(x - 20) % 10] || o[0]);
+}
+
+for (n = 0; n < color.length; n++) {
+    let ordinal = n + 1;
+    let output = (Ordinal(ordinal) + " choise is " + color[n] + ".");
+    console.log(output);
+}
+/** *********************************** */
+
+// 16. Find the leap years in a given range of years.
+function leap_year_range(st_year, end_year) {
+    const year_range = [];
+    for (let i = st_year; i <= end_year; i++) {
+        year_range.push(i);
+    }
+    const new_array = [];
+
+    year_range.forEach(
+        year => {
+            if (test_LeapYear(year)) {
+                new_array.push(year);
+            }
+        }
+    );
+    return new_array;
+}
+
+function test_LeapYear(year) {
+    if ((year % 4 === 0 && year % 100 !== 0) || (year % 100 === 0 && year % 400 === 0)) {
+        return year;
+    } else {
+        return false;
+    }
+}
+console.log(leap_year_range(2000, 2012));
+/** *********************************** */
+
+// 17. Write a JavaScript program to shuffle an array.
+function shuffle(arra1) {
+    let ctr = arra1.length, temp, index;
+    // While there are elements in the array
+    while (ctr > 0) {
+        // Pick a random index
+        index = Math.floor(Math.random() * ctr);
+        // Decrease ctr by 1
+        ctr--;
+        // And swap the last element with it
+        temp = arra1[ctr];
+        arra1[ctr] = arra1[index];
+        arra1[index] = temp;
+    }
+    return arra1;
+}
+let myArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(shuffle(myArray));
+/** *********************************** */
+
+// 18. Write a JavaScript program to perform a binary search.
+
+// Note : A binary search or half-interval search algorithm finds 
+// the position of a specified input value within an array sorted by key value.
+// Sample array :
+// var items = [1, 2, 3, 4, 5, 7, 8, 9];
+// Expected Output :
+// console.log(binary_Search(items, 1)); //0
+// console.log(binary_Search(items, 5)); //4
+function binary_Search(items, value) {
+    let firstIndex = 0,
+        lastIndex = items.length - 1,
+        middleIndex = Math.floor((lastIndex + firstIndex) / 2);
+
+    while (items[middleIndex] != value && firstIndex < lastIndex) {
+        if (value < items[middleIndex]) {
+            lastIndex = middleIndex - 1;
+        } else if (value > items[middleIndex]) {
+            firstIndex = middleIndex + 1;
+        }
+        middleIndex = Math.floor((lastIndex + firstIndex) / 2);
+    }
+    return (items[middleIndex] != value) ? -1 : middleIndex;
+}
+let items = [1, 2, 3, 4, 5, 7, 8, 9];
+console.log(binary_Search(items, 1));
+console.log(binary_Search(items, 5));
+/** *********************************** */
+
+// 19. There are two arrays with individual values, 
+// write a JavaScript program to compute the sum of each individual index value from the given arrays.
+
+// Sample array :
+// array1 = [1,0,2,3,4];
+// array2 = [3,5,6,7,8,13];
+// Expected Output :
+// [4, 5, 8, 10, 12, 13]
+
+function Arrays_sum(array1, array2) {
+    let result = [];
+    let ctr = 0;
+    let x = 0;
+
+    if (array1.length === 0) {
+        return "array1 is empty";
+    }
+    if (array2.length === 0) {
+        return "array2 is empty";
+    }
+
+    while (ctr < array1.length && ctr < array2.length) {
+        result.push(array1[ctr] + array2[ctr]);
+        ctr++;
+    }
+
+    if (ctr === array1.length) {
+        for (x = ctr; x < array2.length; x++) {
+            result.push(array2[x]);
+        }
+    } else {
+        for (x = ctr; x < array1.length; x++) {
+            result.push(array1[x]);
+        }
+    }
+    return result;
+}
+console.log(Arrays_sum([1,0,2,3,4], [3,5,6,7,8,13]));
+/** *********************************** */
+
+// 20. Write a JavaScript program to find duplicate values in a JavaScript array.
+function find_duplicate_in_array(arra1) {
+    let object = {};
+    let result = [];
+
+    arra1.forEach(function (item) {
+        if (!object[item])
+            object[item] = 0;
+            object[item] += 1;
+    });
+
+    for (let prop in object) {
+        if (object[prop] >= 2) {
+            result.push(prop);
+        }
+    }
+    return result;
+}
+console.log(find_duplicate_in_array([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6]));
+/** *********************************** */
