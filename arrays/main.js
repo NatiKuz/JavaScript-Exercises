@@ -458,3 +458,298 @@ function find_duplicate_in_array(arra1) {
 }
 console.log(find_duplicate_in_array([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6]));
 /** *********************************** */
+
+// 21. Write a JavaScript program to flatten a nested (any depth) array. 
+// If you pass shallow, the array will only be flattened a single level.
+
+// Sample Data :
+// console.log(flatten([1, [2], [3, [[4]]],[5,6]]));
+// [1, 2, 3, 4, 5, 6]
+// console.log(flatten([1, [2], [3, [[4]]],[5,6]], true));
+// [1, 2, 3, [[4]], 5, 6]
+function flatten(a, shallow, r) {
+    if (!r) {
+        r = [];
+    }
+    if (shallow) {
+        return r.concat.apply(r, a);
+    }
+
+    for (let i = 0; i < a.length; i++) {
+        if (a[i].constructor == Array) {
+            flatten(a[i], shallow, r);
+        } else {
+            r.push(a[i]);
+        }
+    }
+    return r;
+}
+console.log(flatten([1, [2], [3, [[4]]], [5, 6]]));
+console.log(flatten([1, [2], [3, [[4]]], [5, 6]], true));
+/** *********************************** */
+
+// 22. Write a JavaScript program to compute the union of two arrays.
+
+// Sample Data :
+// console.log(union([1, 2, 3], [100, 2, 1, 10]));
+// [1, 2, 3, 10, 100]
+function union(arra1, arra2) {
+    if ((arra1 == null) || (arra2 == null)) {
+        return void 0;
+    }
+    let obj = {};
+    for (let i = arra1.length - 1; i >= 0; --i) {
+        obj[arra1[i]] = arra1[i];
+    }
+    for (let i = arra2.length - 1; i >= 0; --i) {
+        obj[arra2[i]] = arra2[i];
+    }
+    let res = [];
+    for (let n in obj) {
+        if (obj.hasOwnProperty(n)) {
+            res.push(obj[n]);
+        }
+    }
+    return res;
+}
+console.log(union([1, 2, 3], [100, 2, 1, 10]));
+/** *********************************** */
+
+// 23. Write a JavaScript function to find the difference of two arrays.
+
+// Test Data :
+// console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+// ["3", "10", "100"]
+// console.log(difference([1, 2, 3, 4, 5], [1, [2], [3, [[4]]],[5,6]]));
+// ["6"]
+// console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+// ["3", "10", "100"]
+function differenceOf2Arrays(array1, array2) {
+    let temp = [];
+    array1 = array1.toString().split(',').map(Number);
+    array2 = array2.toString().split(',').map(Number);
+
+    for (let i in array1) {
+        if (array2.indexOf(array1[i]) === -1) {
+            temp.push(array1[i]);
+        }
+    }
+    for (let i in array2) {
+        if (array1.indexOf(array2[i]) === -1) {
+            temp.push(array2[i]);
+        }
+    }
+    return temp.sort((a, b) => a - b);
+}
+console.log(differenceOf2Arrays([1, 2, 3], [100, 2, 1, 10]));
+console.log(differenceOf2Arrays([1, 2, 3, 4, 5], [1, [2], [3, [[4]]],[5,6]]));
+/** *********************************** */
+
+// 24. Write a JavaScript function to remove. 
+// 'null', '0', '""', 'false', 'undefined' and 'NaN' values from an array.
+
+// Sample array : [NaN, 0, 15, false, -22, '',undefined, 47, null]
+// Expected result : [15, -22, 47]
+function filter_array(test_array) {
+    let index = -1,
+        arr_length = test_array ? test_array.length : 0,
+        resIndex = -1,
+        result = [];
+
+    while (++index < arr_length) {
+        let value = test_array[index];
+
+        if (value) {
+            result[++resIndex] = value;
+        }
+    }
+    return result;
+}
+console.log(filter_array([NaN, 0, 15, false, -22, '',undefined, 47, null]));
+/** *********************************** */
+
+// 25. Write a JavaScript function to sort the following array of objects by title value.
+
+// Sample object :
+
+// var library = [ 
+//    { author: 'Bill Gates', title: 'The Road Ahead', libraryID: 1254},
+//    { author: 'Steve Jobs', title: 'Walter Isaacson', libraryID: 4264},
+//    { author: 'Suzanne Collins', title: 'Mockingjay: The Final Book of The Hunger Games', libraryID: 3245}
+//    ];
+// Expected result :
+
+// [[object Object] {
+//   author: "Suzanne Collins",
+//   libraryID: 3245,
+//   title:"Mockingjay:The Final Book of The Hunger Games"
+// }, [object Object] {
+//   author: "Bill Gates",
+//   libraryID: 1254,
+//   title: "The Road Ahead"
+// }, [object Object] {
+//   author: "Steve Jobs",
+//   libraryID: 4264,
+//   title: "Walter Isaacson"
+// }]
+var library = [ 
+    { author: 'Bill Gates', title: 'The Road Ahead', libraryID: 1254},
+    { author: 'Steve Jobs', title: 'Walter Isaacson', libraryID: 4264},
+    { author: 'Suzanne Collins', title: 'Mockingjay: The Final Book of The Hunger Games', libraryID: 3245}
+];
+function compare_to_sort(x, y) {
+    if (x.title < y.title) {
+        return -1;
+    }
+    if (x.title > y.title) {
+        return 1;
+    }
+    return 0;
+}
+console.log(library.sort(compare_to_sort));
+/** *********************************** */
+
+// 26. Write a JavaScript program to find a pair of elements (indices of the two numbers)
+// from an given array whose sum equals a specific target number.
+
+// Input: numbers= [10,20,10,40,50,60,70], target=50
+// Output: 2, 3
+function twoSum(nums, target_num) {
+    let map = [];
+    let indexnum = [];
+    for (let x = 0; x < nums.length; x++) {
+        if (map[nums[x]] != null) {
+            let index = map[nums[x]];
+            indexnum[0] = index;
+            indexnum[1] = x;
+            break;
+        } else {
+            map[target_num - nums[x]] = x;
+        }
+    }
+    return indexnum;
+}
+console.log(twoSum([10,20,10,40,50,60,70], 50));
+/** *********************************** */
+
+// 27. Write a JavaScript function to retrieve the value 
+// of a given property from all elements in an array.
+
+// Sample array : [NaN, 0, 15, false, -22, '',undefined, 47, null]
+// Expected result : [15, -22, 47]
+let library1 = [ 
+    { author: 'Bill Gates', title: 'The Road Ahead', libraryID: 1254},
+    { author: 'Steve Jobs', title: 'Walter Isaacson', libraryID: 4264},
+    { author: 'Suzanne Collins', title: 'Mockingjay: The Final Book of The Hunger Games', libraryID: 3245}
+];
+
+function property_value(array, property_key) {
+    let arr = [],
+        index = -1,
+        arrlen = array.length, array_items;
+
+    while (++index < arrlen) {
+        array_items = array[index];
+
+        if (array_items.hasOwnProperty(property_key)) {
+            arr[arr.length] = array_items[property_key];
+        }
+    }
+    return arr;
+}
+console.log(property_value(library, 'title'));
+console.log(property_value(library, 'author'));
+/** *********************************** */
+
+// 28. Write a JavaScript function to find 
+// the longest common starting substring in a set of strings.
+
+// Sample array : console.log(longest_common_starting_substring(['go', 'google']));
+// Expected result : "go"
+function longest_common_starting_substring(arr1) {
+    let arr = arr1.concat().sort(),
+        a1 = arr[0],
+        a2 = arr[arr.length - 1],
+        L = a1.length,
+        i = 0;
+
+    while (i < L && a1.charAt(i) === a2.charAt(i))
+        i++;
+        return a1.substring(0, i);
+}
+console.log(longest_common_starting_substring(['go', 'google']));
+console.log(longest_common_starting_substring(['SQLInjection', 'SQLTutorial']));
+console.log(longest_common_starting_substring(['abcd', '1234'])); 
+/** *********************************** */
+
+// 29. Write a JavaScript function to fill an array with values 
+// (numeric, string with one character) on supplied bounds.
+
+// Test Data :
+// console.log(num_string_range('a', "z", 2));
+// ["a", "c", "e", "g", "i", "k", "m", "o", "q", "s", "u", "w", "y"]
+function num_string_range(start, end, step) {
+    let range = [];
+    if ((step === 0) || (typeof start == "undefined" || typeof end == "undefined") || (typeof start != typeof end)) {
+        return false;
+    }
+    if (end < start) {
+        step = -step;
+    }
+    if (typeof start == "number") {
+        while (step > 0 ? end >= start : end <= start) {
+            range.push(start);
+            start += step;
+        }
+    } else if (typeof start == "string") {
+        if (start.length != 1 || end.length != 1) {
+            throw TypeError("Strings with one character are supported.");
+        }
+
+        start = start.charCodeAt(0);
+        end = end.charCodeAt(0);
+
+        while (step > 0 ? end >= start : end <= start) {
+            range.push(String.fromCharCode(start));
+            start += step;
+        }
+    } else {
+        throw TypeError("Only string and number are supported");
+    }
+    return range;
+}
+console.log(num_string_range('a', "z", 2));
+console.log(num_string_range("Z", "A", 2));
+console.log(num_string_range(0, -5, 1));
+console.log(num_string_range(0, 25, 5));
+console.log(num_string_range(20, 5, 5));
+/** *********************************** */
+
+// 30. Write a JavaScript function to merge two arrays and removes all duplicates elements.
+
+// Test data :
+// var array1 = [1, 2, 3];
+// var array2 = [2, 30, 1];
+// console.log(merge_array(array1, array2));
+// [3, 2, 30, 1]
+function merge_array(array1, array2) {
+    let result_array = [];
+    let arr = array1.concat(array2);
+    let len = arr.length;
+    let assoc = {};
+
+    while (len--) {
+        let item = arr[len];
+
+        if (!assoc[item]) { 
+            result_array.unshift(item);
+            assoc[item] = true;
+        }
+    }
+    return result_array;
+}
+
+let arrayy1 = [1, 2, 3];
+let arrayy2 = [2, 30, 1];
+console.log(merge_array(arrayy1, arrayy2));
+/** *********************************** */
