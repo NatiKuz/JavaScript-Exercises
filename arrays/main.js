@@ -753,3 +753,289 @@ let arrayy1 = [1, 2, 3];
 let arrayy2 = [2, 30, 1];
 console.log(merge_array(arrayy1, arrayy2));
 /** *********************************** */
+
+// 31. Write a JavaScript function to remove a specific element from an array. 
+
+// Test data :
+// console.log(remove_array_element([2, 5, 9, 6], 5));
+// [2, 9, 6]
+function remove_array_element(array, n) {
+    let index = array.indexOf(n);
+    if (index > -1) {
+        array.splice(index, 1);
+    }
+    return array;
+}
+console.log(remove_array_element([2, 5, 9, 6], 5));
+/** *********************************** */
+
+// 32. Write a JavaScript function to find an array contains a specific element.
+
+// Test data :
+// arr = [2, 5, 9, 6];
+// console.log(contains(arr, 5));
+// [True]
+function contains(arr, element) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === element) {
+            return true;
+        }
+    }
+    return false;
+}
+arr = [2, 5, 9, 6];
+console.log(contains(arr, 5));
+/** *********************************** */
+
+// 33. Write a JavaScript script to empty an array keeping the original.
+let arr3 = [1, 3, 6, 3, -5];
+console.log(arr3);
+arr3.length = 0;
+console.log(arr3);
+/** *********************************** */
+
+// 34. Write a JavaScript function to get nth largest element from an unsorted array.
+
+// Test Data :
+// console.log(nthlargest([ 43, 56, 23, 89, 88, 90, 99, 652], 4));
+// 89
+function nthlargest(arra, highest) {
+    let x = 0,
+        y = 0,
+        z = 0,
+        temp = 0,
+        flag = false,
+        result = false;
+    
+    while (x < arra.length) {
+        y = x + 1;
+
+        if (y < arra.length) {
+            for (z = y; z < arra.length; z++) {
+
+                if (arra[x] < arra[z]) {
+                    temp = arra[z];
+                    arra[z] = arra[x];
+                    arra[x] = temp;
+                    flag = true;
+                } else {
+                    continue;
+                }
+            }
+        }
+
+        if (flag) {
+            flag = false;
+        } else {
+            x++;
+            if (x === highest) {
+                result = true;
+            }
+        }
+        if (result) {
+            break;
+        }
+    }
+    return (arra[(highest - 1)]);
+}
+console.log(nthlargest([ 43, 56, 23, 89, 88, 90, 99, 652], 4));
+/** *********************************** */
+
+// 35. Write a JavaScript function to get a random item from an array.
+function random_item(items) {
+    return items[Math.floor(Math.random() * items.length)];
+}
+let items1 = [254, 45, 212, 365, 2543];
+console.log(random_item(items1));
+/** *********************************** */
+
+// 36. Write a JavaScript function to create a specified number of elements with pre-filled numeric value array.
+// Test Data :
+// console.log(array_filled(6, 0));
+// [0, 0, 0, 0, 0, 0]
+// console.log(array_filled(4, 11));
+// [11, 11, 11, 11]
+function array_filled(n, val) {
+    return Array.apply(null, Array(n)).map(Number.prototype.valueOf, val);
+}
+console.log(array_filled(6, 0));
+console.log(array_filled(4, 11));
+/** *********************************** */
+
+// 37. Write a JavaScript function to create a specified number of elements with pre-filled string value array.
+
+// Test Data :
+// console.log(array_filled(3, 'default value'));
+// ["default value", "default value", "default value"]
+// console.log(array_filled(4, 'password'));
+// ["password", "password", "password", "password"]
+function array_filled1(n, val) {
+    return Array.apply(null, Array(n))
+                .map(String.prototype.valueOf, val);
+}
+console.log(array_filled1(3, 'default value'));
+console.log(array_filled1(4, 'password'));
+/** *********************************** */
+
+// 38. Write a JavaScript function to move an array element from one position to another.
+
+// Test Data :
+// console.log(move([10, 20, 30, 40, 50], 0, 2));
+// [20, 30, 10, 40, 50]
+// console.log(move([10, 20, 30, 40, 50], -1, -2));
+// [10, 20, 30, 50, 40]
+function move(arr, old_index, new_index) {
+    while (old_index < 0) {
+        old_index = old_index + arr.length;
+    }
+    while (new_index < 0) {
+        new_index = new_index + arr.length;
+    }
+    if (new_index >= arr.length) {
+        var k = new_index - arr.length;
+        while ((k--) + 1) {
+            arr.push(undefined);
+        }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr;
+}
+console.log(move([10, 20, 30, 40, 50], 0, 2));
+console.log(move([10, 20, 30, 40, 50], -1, -2));
+/** *********************************** */
+
+// 39. Write a JavaScript function to filter false, null, 0 and blank values from an array.
+
+// Test Data :
+// console.log(filter_array_values([58, '', 'abcd', true, null, false, 0]));
+// [58, "abcd", true]
+function filter_array_values(arr) {
+    arr = arr.filter(isEligible);
+    return arr;
+}
+
+function isEligible(value) {
+    if (value !== false || value !== null || value !== 0 || value !== '') {
+        return value;
+    }
+}
+console.log(filter_array_values([58, '', 'abcd', true, null, false, 0]));
+/** *********************************** */
+
+// 40. Write a JavaScript function to generate an array of specified length, filled with integer numbers, increase by one from starting position.
+
+// Test Data :
+// console.log(array_range(1, 4));
+// [1, 2, 3, 4]
+// console.log(array_range(-6, 4));
+// [-6, -5, -4, -3]
+function array_range(start, len) {
+    let arr = new Array(len);
+    for (let i = 0; i < len; i++, start++) {
+        arr[i] = start;
+    }
+    return arr;
+}
+console.log(array_range(1, 4));
+console.log(array_range(-6, 4));
+/** *********************************** */
+
+// 41. Write a JavaScript function to generate an array between two integers of 1 step length.
+
+// Test Data :
+// console.log(rangeBetwee(4, 7));
+// [4, 5, 6, 7]
+// console.log(rangeBetwee(-4, 7));
+// [-4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
+function rangeBetwee(start, end) {
+    if (start > end) {
+        let arr = new Array(start - end + 1);
+
+        for (let i = 0; i < arr.length; i++, start--) {
+            resarrult[i] = start;
+        }
+        return arr;
+    } else {
+        let arro = new Array(end - start + 1);
+
+        for (let j = 0; j < arro.length; j++, start++) {
+            arro[j] = start;
+        }
+        return arro;
+    } 
+}
+console.log(rangeBetwee(4, 7));
+console.log(rangeBetwee(-4, 7));
+/** *********************************** */
+
+// 42. Write a JavaScript function to find the unique elements from two arrays.
+
+// Test Data :
+// console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+// ["1", "2", "3", "10", "100"]
+// console.log(difference([1, 2, 3, 4, 5], [1, [2], [3, [[4]]],[5,6]]));
+// ["1", "2", "3", "4", "5", "6"]
+// console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+// ["1", "2", "3", "10", "100"]
+
+function difference(arr1,arr2) {
+  
+    var a1= flatten(arr1,true);
+    var a2= flatten(arr2,true);
+    
+    var a=[], diff=[];
+    for(var i=0;i< a1.length;i++)
+      a[a1[i]]=false;
+    for(i=0;i< a2.length;i++)
+    if(a[a2[i]]===true) 
+       { delete a[a2[i]];}
+      else a[a2[i]]=true;
+    for(var k in a)
+      diff.push(k);
+    return diff;   
+}
+
+var flatten = function(a, shallow, r) {
+    if (!r) {
+        r = [];
+    }
+    if (shallow) {
+        return r.concat.apply(r, a);
+    }
+    for (i = 0; i < a.length; i++) {
+        if (a[i].constructor == Array) {
+            flatten(a[i], shallow, r);
+        } else {
+            r.push(a[i]);
+        }
+    }
+    return r;
+};
+console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+console.log(difference([1, 2, 3, 4, 5], [1, [2], [3, [[4]]],[5,6]]));
+console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+/** *********************************** */
+
+/** *********************************** */
+let people = [
+    {name: "Neti", age: 32, hasJob: true, gender: "female"},
+    {name: "Pavlo", age: 34, hasJob: true, gender: "male"},
+    {name: "Mike", age: 25, hasJob: false, gender: "male"},
+    {name: "Ann", age: 35, hasJob: true, gender: "female"},
+    {name: "Jou", age: 40, hasJob: false, gender: "male"}
+];
+console.log(people);
+
+let arrPeop = people.filter(person => person.gender === "male")
+                    .map(person => person.age);
+console.log(arrPeop);
+
+let sum = arrPeop.reduce(function(acc, cur) {
+    return acc + cur;
+    // acc +=cur;
+    // return acc;
+}, 0);
+console.log(sum);
+
+let avarage = sum / arrPeop.length;
+console.log(avarage);
